@@ -1,4 +1,4 @@
-import { addUserQuery } from "./user-queries";
+import { addUserQuery } from "./user-queries.js";
 import { genSaltSync, hashSync } from "bcrypt";
 
 export const addUser = (req, res) => {

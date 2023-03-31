@@ -9,3 +9,5 @@ export const db = createPool({
   password: process.env.dev_password || "",
   database: process.env.dev_database,
 });
+
+export const a = "test";

@@ -1,4 +1,4 @@
-import db from "../../config/database.js";
+import { db } from "../../config/database.js";
 
 export const addUserQuery = (data, callBack) => {
   const stmt = `INSERT INTO users(username, password) values(?, ?)`;
