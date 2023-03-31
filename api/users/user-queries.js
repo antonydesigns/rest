@@ -14,11 +14,10 @@ export const fetchAllUsersQuery = (callBack) => {
 };
 
 export const fetchOneUserQuery = (data, callBack) => {
-  const stmt = `SELECT username FROM users WHERE id=?`;
+  const stmt = `SELECT username FROM users WHERE id = ?`;
   const entries = [data.id];
   const process = (error, results, fields) => {
     if (error) return callBack(error);
-
     return callBack(null, results);
   };
   // GET request to the MySQL database

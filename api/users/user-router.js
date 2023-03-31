@@ -1,5 +1,17 @@
 import express from "express";
 const router = express.Router();
-import { addUser } from "./user-controller.js";
+import {
+  fetchAllUsers,
+  fetchOneUser,
+  patchUser,
+  addUser,
+  deleteUser,
+} from "./user-controller.js";
 
-export const userRouter = router.post("/", addUser);
+router.get("/", fetchAllUsers);
+router.get("/:id", fetchOneUser);
+router.patch("/:id", patchUser);
+router.post("/", addUser);
+router.delete("/:id", deleteUser);
+
+export const userRouter = router;
