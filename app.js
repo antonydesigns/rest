@@ -1,5 +1,4 @@
 import express from "express";
-import { a } from "./config/database.js";
 
 const app = express();
 
@@ -8,11 +7,10 @@ const endpoints = {
 };
 
 app.get(endpoints.getAll, (req, res) => {
-  const result = { success: 1, message: "hello world" };
-  res.json(result);
+  const data = { success: 1, message: "hello world" };
+  res.json(data);
 });
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
-  console.log(a);
 });
