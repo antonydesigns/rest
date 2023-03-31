@@ -1,7 +1,7 @@
 import { db } from "../../config/database.js";
 
 export const fetchAllUsersQuery = (callBack) => {
-  const stmt = `SELECT username FROM users`;
+  const stmt = `SELECT username, password, email FROM users`;
   const process = (error, results, fields) => {
     // if database connection is bad, callback passes an error to the Controller
     if (error) return callBack(error);
@@ -13,9 +13,9 @@ export const fetchAllUsersQuery = (callBack) => {
   db.query(stmt, [], process);
 };
 
-export const fetchOneUserQuery = (data, callBack) => {
-  const stmt = `SELECT username FROM users WHERE id = ?`;
-  const entries = [data.id];
+export const fetchOneUserQuery = (id, callBack) => {
+  const stmt = `SELECT username, password, email FROM users WHERE id=?`;
+  const entries = [id];
   const process = (error, results, fields) => {
     if (error) return callBack(error);
     return callBack(null, results);
@@ -25,8 +25,8 @@ export const fetchOneUserQuery = (data, callBack) => {
 };
 
 export const patchUserQuery = (data, callBack) => {
-  const stmt = `UPDATE users SET username=?, password=? WHERE id=?`;
-  const entries = [data.username, data.password];
+  const stmt = `UPDATE users SET username=?, password=?, email=? WHERE id=?`;
+  const entries = [data.username, data.password, data.email, data.id];
   const process = (error, results, fields) => {
     if (error) return callBack(error);
     return callBack(null, results);
@@ -36,8 +36,8 @@ export const patchUserQuery = (data, callBack) => {
 };
 
 export const addUserQuery = (data, callBack) => {
-  const stmt = `INSERT INTO users(username, password) values(?, ?)`;
-  const entries = [data.username, data.password];
+  const stmt = `INSERT INTO users(username, password, email) values(?, ?, ?)`;
+  const entries = [data.username, data.password, data.email];
   const process = (error, results, fields) => {
     if (error) return callBack(error);
     return callBack(null, results);
@@ -48,7 +48,7 @@ export const addUserQuery = (data, callBack) => {
 
 export const deleteUserQuery = (data, callBack) => {
   const stmt = `DELETE FROM users WHERE id=?`;
-  const entries = [data.id];
+  const entries = [id];
   const process = (error, results, fields) => {
     if (error) return callBack(error);
     return callBack(null, results);

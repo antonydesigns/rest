@@ -8,9 +8,6 @@ import {
 import { genSaltSync, hashSync } from "bcrypt";
 
 const resMsg = {
-  dbConnectError: {
-    message: "Database connection error",
-  },
   recordNotFound: {
     message: "Record not found",
   },
@@ -24,7 +21,7 @@ const resMsg = {
 
 export const fetchAllUsers = (req, res) => {
   fetchAllUsersQuery((err, results) => {
-    if (err) return res.json(resMsg.dbConnectError);
+    if (err) return res.json(err);
     if (!results) return res.json(resMsg.recordNotFound);
     return res.status(200).json({ data: results });
   });
@@ -55,7 +52,7 @@ export const deleteUser = (req, res) => {
   const id = req.params.id;
   deleteUserQuery(id, (err, results) => {
     if (err) return res.json(resMsg.dbConnectError);
-    if (!result) return res.json(resMsg.deleteFailed);
+    if (!results) return res.json(resMsg.deleteFailed);
     return res.status(200).json({ data: results });
   });
 };
@@ -65,7 +62,7 @@ export const addUser = (req, res) => {
   const salt = genSaltSync(10);
   body.password = hashSync(body.password, salt);
   addUserQuery(body, (err, results) => {
-    if (err) return res.status(500).json(resMsg.dbConnectError);
+    if (err) return res.json(err);
     return res.status(200).json({ data: results });
   });
 };
