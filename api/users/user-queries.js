@@ -25,7 +25,7 @@ export const fetchOneUserQuery = (data, callBack) => {
   db.query(stmt, entries, process);
 };
 
-export const patchOneUserQuery = (data, callBack) => {
+export const patchUserQuery = (data, callBack) => {
   const stmt = `UPDATE users SET username=?, password=? WHERE id=?`;
   const entries = [data.username, data.password];
   const process = (error, results, fields) => {

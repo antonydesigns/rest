@@ -1,7 +1,7 @@
 import {
   fetchAllUsersQuery,
   fetchOneUserQuery,
-  patchOneUserQuery,
+  patchUserQuery,
   addUserQuery,
   deleteUserQuery,
 } from "./user-queries.js";
@@ -33,13 +33,13 @@ export const fetchOneUser = (req, res) => {
   });
 };
 
-export const patchOneUser = (req, res) => {
+export const patchUser = (req, res) => {
   const body = req.body;
   const salt = genSaltSync(10);
   body.password = hashSync(body.password, salt);
-  patchOneUserQuery(body, (err, results) => {
+  patchUserQuery(body, (err, results) => {
     if (err) return res.json(resMsg.dbConnectError);
-    // error message for failed to update / patch?
+    if (!result) return res.json(resMsg.recordNotFound);
     return res.status(200).json({ data: results });
   });
 };
@@ -48,6 +48,7 @@ export const deleteUser = (req, res) => {
   const id = req.params.id;
   deleteUserQuery(id, (err, results) => {
     if (err) return res.json(resMsg.dbConnectError);
+    if (!result) return res.json(resMsg.recordNotFound);
     return res.status(200).json({ data: results });
   });
 };
